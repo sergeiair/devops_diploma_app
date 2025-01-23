@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
         - name: java-web-server
-          image: sergeizh/java-web-server:latest
+          image: sergeizh/java-web-server:0f2dad4
           ports:
             - containerPort: 8080
