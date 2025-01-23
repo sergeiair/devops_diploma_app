@@ -44,12 +44,9 @@ jobs:
           
       - name: Commit deployment file
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
           git checkout -b deployments
           git add deployment/deployment.yaml
           git commit -m "Update deployment image to commit hash ${{ env.COMMIT_HASH }}"
-          git remote add origin https://${{ secrets.REPO_PAT}}@github.com/sergeiair/devops_diploma_app.git
           git push origin deployments    
 
       - name: Trigger ArgoCD Sync
