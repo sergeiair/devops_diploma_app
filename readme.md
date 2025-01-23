@@ -16,9 +16,13 @@
 #####   server.insecure: "true"
 ##### kubectl rollout restart deployment argocd-server -n argocd
 
-
 ### GET IPs
 #### kubectl get svc -n ingress-nginx
 
 ### ARGO CD PW
 #### kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d
+
+
+### APP IPs
+#### kubectl get svc java-web-server-service
+
