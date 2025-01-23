@@ -27,13 +27,16 @@ jobs:
       - name: Build Docker Image
         run: cd app && docker build -t java-web-server .
 
+      - name: Get commit hash
+        run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
       - name: Tag image
-        run: docker tag java-web-server sergeizh/java-web-server:latest
+        run: docker tag java-web-server sergeizh/java-web-server:$COMMIT_HASH
 
       # Push Docker image to Docker Hub
       - name: Push Docker Image to Docker Hub
         run: |
-          docker push sergeizh/java-web-server:latest
+          docker push sergeizh/java-web-server:$COMMIT_HASH
 
       # Trigger ArgoCD to sync the app
       - name: Trigger ArgoCD Sync
