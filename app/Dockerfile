@@ -1,4 +1,3 @@
-GNU nano 7.2                                                          Dockerfile *
 FROM openjdk:17-jdk-slim
 
 WORKDIR /app
