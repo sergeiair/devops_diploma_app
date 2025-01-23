@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
         - name: java-web-server
-          image: sergeizh/java-web-server:latest
+          image: sergeizh/java-web-server:${COMMIT_HASH}
           ports:
             - containerPort: 8080
