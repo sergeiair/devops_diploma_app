@@ -33,10 +33,10 @@ jobs:
       - name: Tag image
         run: docker tag java-web-server sergeizh/java-web-server:$COMMIT_HASH
 
-      - name: Get latest commit hash and update deployment YAML
+      - name: Tag as latest (optional)
         run: |
-          COMMIT_HASH=$(git rev-parse --short HEAD)
-          sed -i "s|sergeizh/java-web-server:\${COMMIT_HASH}|sergeizh/java-web-server:$COMMIT_HASH|" deployment/deployment.yaml
+          docker tag sergeizh/java-web-server:$COMMIT_HASH sergeizh/java-web-server:latest
+          docker push sergeizh/java-web-server:latest
 
       # Push Docker image to Docker Hub
       - name: Push Docker Image to Docker Hub
