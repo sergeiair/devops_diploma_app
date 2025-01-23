@@ -17,7 +17,7 @@ public class HelloWorldServer {
 
     static class HelloHandler implements HttpHandler {
         public void handle(HttpExchange exchange) throws IOException {
-            String response = "Hi from Java at " + Instant.now().toString();
+            String response = "Hi from Java at " + Instant.now().toString() + "!";
             exchange.sendResponseHeaders(200, response.length());
             OutputStream os = exchange.getResponseBody();
             os.write(response.getBytes());
