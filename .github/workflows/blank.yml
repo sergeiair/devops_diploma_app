@@ -1,0 +1,51 @@
+name: Build and Deploy Java Application
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Set up Java
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # Build with Maven
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
+
+      # Build Docker image
+      - name: Build Docker Image
+        run: docker build -t sergeizh/java-web-server:latest .
+
+      # Login to Docker Hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_EMAIL }}
+          password: ${{ secrets.DOCKERHUB_PW }}
+
+      # Push Docker image to Docker Hub
+      - name: Push Docker Image to Docker Hub
+        run: |
+          docker push sergeizh/java-web-server:latest
+
+      # Trigger ArgoCD to sync the app
+      - name: Trigger ArgoCD Sync
+        run: |
+          curl -X POST http://http://a09ab25cff03d410195244b334e4b653-7f5a5ff112fff0c0.elb.us-east-1.amazonaws.com/api/webhook \
+            -H "Content-Type: application/json" \
+            -d '{
+                  "name": "java-app",
+                  "namespace": "argocd"
+                }'
