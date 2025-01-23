@@ -49,7 +49,7 @@ jobs:
           git checkout -b deployments
           git add deployment/deployment.yaml
           git commit -m "Update deployment image to commit hash ${{ env.COMMIT_HASH }}"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/sergeiair/devops_diploma_app.git
+          git push -f https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/sergeiair/devops_diploma_app.git
 
 
       - name: Trigger ArgoCD Sync
