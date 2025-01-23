@@ -38,7 +38,7 @@ jobs:
       # Trigger ArgoCD to sync the app
       - name: Trigger ArgoCD Sync
         run: |
-          curl -X POST http://http://a09ab25cff03d410195244b334e4b653-7f5a5ff112fff0c0.elb.us-east-1.amazonaws.com/api/webhook \
+          curl -X POST http://a09ab25cff03d410195244b334e4b653-7f5a5ff112fff0c0.elb.us-east-1.amazonaws.com/api/webhook \
             -H "Content-Type: application/json" \
             -d '{
                   "name": "java-app",
