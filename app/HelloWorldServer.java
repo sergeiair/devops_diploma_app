@@ -21,7 +21,7 @@ public class HelloWorldServer {
     static class HelloHandler implements HttpHandler {
         public void handle(HttpExchange exchange) throws IOException {
             OutputStream os = exchange.getResponseBody();
-            String response = "Hey ho from Java App at " + getDateTimeString() + "! \r\n \r\n App started at " + buildMade;
+            String response = "Hi from Java App at " + getDateTimeString() + "! \r\n \r\n App started at " + buildMade;
 
             exchange.sendResponseHeaders(200, response.length());
 
