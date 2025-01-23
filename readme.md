@@ -22,7 +22,6 @@
 ### ARGO CD PW
 #### kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d
 
-
 ### APP IPs
 #### kubectl get svc java-web-server-service
 
