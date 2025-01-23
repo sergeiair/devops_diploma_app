@@ -3,10 +3,10 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-COPY HelloWorldServer.java .
+COPY app.java .
 
-RUN javac HelloWorldServer.java
+RUN javac app.java
 
 EXPOSE 8080
 
-CMD ["java", "HelloWorldServer"]
+CMD ["java", "app"]
