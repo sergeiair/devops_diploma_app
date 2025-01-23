@@ -33,17 +33,24 @@ jobs:
       - name: Tag image
         run: docker tag java-web-server sergeizh/java-web-server:$COMMIT_HASH
 
-      - name: Tag as latest (optional)
-        run: |
-          docker tag sergeizh/java-web-server:$COMMIT_HASH sergeizh/java-web-server:latest
-          docker push sergeizh/java-web-server:latest
-
       # Push Docker image to Docker Hub
       - name: Push Docker Image to Docker Hub
         run: |
           docker push sergeizh/java-web-server:$COMMIT_HASH
+          
+      - name: Update Kubernetes manifest
+        run: |
+          sed -i "s|sergeizh/java-web-server:latest|sergeizh/java-web-server:${{ env.COMMIT_HASH }}|g" deployment/deployment.yaml  
+          
+      - name: Commit deployment file
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git checkout -b deployments
+          git add deployment/deployment.yaml
+          git commit -m "Update deployment image to commit hash ${{ env.COMMIT_HASH }}"
+          git push -f origin deployments    
 
-      # Trigger ArgoCD to sync the app
       - name: Trigger ArgoCD Sync
         run: |
           curl -X POST http://a09ab25cff03d410195244b334e4b653-7f5a5ff112fff0c0.elb.us-east-1.amazonaws.com/api/webhook \
